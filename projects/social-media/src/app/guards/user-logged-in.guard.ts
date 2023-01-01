@@ -23,6 +23,6 @@ export class UserLoggedInGuard implements CanActivate {
     | boolean
     | UrlTree {
     console.log(route, state);
-    return false;
+    return true;
   }
 }

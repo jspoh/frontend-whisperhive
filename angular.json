@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/social-media",
+            "outputPath": "../backend/frontend-build",
             "index": "projects/social-media/src/index.html",
             "main": "projects/social-media/src/main.ts",
             "polyfills": "projects/social-media/src/polyfills.ts",

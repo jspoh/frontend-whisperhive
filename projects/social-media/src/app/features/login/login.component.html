@@ -1,2 +1,22 @@
-<p class="bg-red-500 mx-auto">login works!</p>
-<h1 class="text-3xl font-bold underline">Hello world!</h1>
+<div class="custom-container">
+  <div class="login-box">
+    <h2>Login</h2>
+    <form [formGroup]="loginForm">
+      <div class="user-box">
+        <input type="text" formControlName="username" />
+        <label>Username</label>
+      </div>
+      <div class="user-box">
+        <input type="password" formControlName="password" />
+        <label>Password</label>
+      </div>
+      <a (click)="onSubmit()">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Submit
+      </a>
+    </form>
+  </div>
+</div>

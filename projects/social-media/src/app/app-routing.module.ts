@@ -8,6 +8,10 @@ const routes: Routes = [
       import('./features/login/login.module').then((m) => m.LoginModule),
   },
   {
+    path: '',
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+  },
+  {
     path: '**',
     redirectTo: '',
   },

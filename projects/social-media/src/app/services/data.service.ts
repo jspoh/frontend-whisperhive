@@ -6,9 +6,11 @@ import { LoginForm } from '../models/login-form';
   providedIn: 'root',
 })
 export class DataService {
+  domainLink = 'http://127.0.0.1:3000';
+
   constructor(private httpClient: HttpClient) {}
 
   loginUser(data: LoginForm) {
-    this.httpClient.post('/login', data).subscribe();
+    return this.httpClient.post(`${this.domainLink}/login`, data);
   }
 }

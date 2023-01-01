@@ -26,12 +26,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    let res: any;
+    // let res: any;
 
     const serverRes = new Promise((resolve, reject) => {
       this.dataService
         .loginUser(this.loginForm.value)
-        .pipe(map((response: any) => (res = response)))
+        // .pipe(map((response: any) => (res = response)))
         .subscribe({
           next(response) {
             // console.log(response);

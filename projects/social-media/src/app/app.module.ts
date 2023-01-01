@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { HomeModule } from './home/home.module';
+import { FeedModule } from './feed/feed.module';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     CoreModule,
-    HomeModule,
+    FeedModule,
     HttpClientModule,
   ],
   providers: [],

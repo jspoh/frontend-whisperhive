@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { FeedModule } from './feed/feed.module';
 import { HttpClientModule } from '@angular/common/http';
+import { UserLoggedInGuard } from './guards/user-logged-in.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     FeedModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [UserLoggedInGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

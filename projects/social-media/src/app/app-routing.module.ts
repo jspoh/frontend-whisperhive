@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserLoggedInGuard } from './guards/user-logged-in.guard';
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: '',
     loadChildren: () =>
       import('./features/login/login.module').then((m) => m.LoginModule),
   },
   {
-    path: '',
+    path: 'feed',
     loadChildren: () => import('./feed/feed.module').then((m) => m.FeedModule),
+    canActivate: [UserLoggedInGuard],
   },
   {
     path: '**',

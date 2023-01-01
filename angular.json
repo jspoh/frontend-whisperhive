@@ -27,9 +27,7 @@
               "projects/social-media/src/favicon.ico",
               "projects/social-media/src/assets"
             ],
-            "styles": [
-              "projects/social-media/src/styles.scss"
-            ],
+            "styles": ["projects/social-media/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -95,9 +93,7 @@
               "projects/social-media/src/favicon.ico",
               "projects/social-media/src/assets"
             ],
-            "styles": [
-              "projects/social-media/src/styles.scss"
-            ],
+            "styles": ["projects/social-media/src/styles.scss"],
             "scripts": []
           }
         }

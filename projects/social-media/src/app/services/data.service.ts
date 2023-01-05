@@ -11,6 +11,8 @@ export class DataService {
   constructor(private httpClient: HttpClient) {}
 
   loginUser(data: LoginForm) {
-    return this.httpClient.post(`${this.domainLink}/login`, data);
+    return this.httpClient.post(`${this.domainLink}/login`, data, {
+      withCredentials: true,
+    });
   }
 }

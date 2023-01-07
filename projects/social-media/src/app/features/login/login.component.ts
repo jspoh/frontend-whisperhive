@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { Subject, takeUntil, map } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -10,7 +10,9 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+  unsubscribe$ = new Subject<void>();
+
   loginForm: any = FormGroup;
 
   constructor(
@@ -27,13 +29,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   onSubmit() {
     let res: any;
 
     const serverRes = new Promise((resolve, reject) => {
       this.dataService
         .loginUser(this.loginForm.value)
-        .pipe(map((response: any) => (res = response)))
+        .pipe(
+          map((response: any) => (res = response)),
+          takeUntil(this.unsubscribe$)
+        )
         .subscribe({
           next(response) {
             // console.log(response);

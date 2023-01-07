@@ -15,4 +15,10 @@ export class DataService {
       withCredentials: true,
     });
   }
+
+  getFeed() {
+    return this.httpClient.get(`${this.domainLink}/feed`, {
+      withCredentials: true,
+    });
+  }
 }

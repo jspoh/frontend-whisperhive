@@ -10,8 +10,14 @@ const routes: Routes = [
   },
   {
     path: 'feed',
-    loadChildren: () => import('./feed/feed.module').then((m) => m.FeedModule),
+    loadChildren: () =>
+      import('./features/feed/feed.module').then((m) => m.FeedModule),
     canActivate: [UserLoggedInGuard],
+  },
+  {
+    path: 'user',
+    loadChildren: () =>
+      import('./features/profile/profile.module').then((m) => m.ProfileModule),
   },
   {
     path: '**',

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginForm } from '../models/login-form';
 import { CookieService } from 'ngx-cookie';
 
@@ -25,8 +25,11 @@ export class DataService {
   }
 
   getFeed() {
-    return this.httpClient.get(`${this.domainLink}/feed`, {
-      withCredentials: true,
-    });
+    const headers = new HttpHeaders().set(
+      'cookie',
+      this.getCookies()['session']
+    );
+    const options = { headers, withCredentials: true };
+    return this.httpClient.get(`${this.domainLink}/feed`, options);
   }
 }

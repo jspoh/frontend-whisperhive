@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {
     this.loginForm = fb.group({
       username: [{ value: '', disabled: false }, [Validators.required]],
@@ -26,12 +28,12 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    // let res: any;
+    let res: any;
 
     const serverRes = new Promise((resolve, reject) => {
       this.dataService
         .loginUser(this.loginForm.value)
-        // .pipe(map((response: any) => (res = response)))
+        .pipe(map((response: any) => (res = response)))
         .subscribe({
           next(response) {
             // console.log(response);
@@ -50,7 +52,8 @@ export class LoginComponent implements OnInit {
     serverRes
       // if user is authenticated (successfully logged in)
       .then(() => {
-        this.router.navigate(['/']);
+        this.cookieService.put('session', res.cookie);
+        this.router.navigate(['/feed']);
       })
       // if wrong username/email/password
       .catch((err) => {

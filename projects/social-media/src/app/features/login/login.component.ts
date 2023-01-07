@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
 import { Subject, takeUntil, map } from 'rxjs';
-import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private dataService: DataService,
-    private router: Router,
-    private cookieService: CookieService
+    private router: Router
   ) {
     this.loginForm = fb.group({
       username: [{ value: '', disabled: false }, [Validators.required]],
@@ -62,7 +60,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     serverRes
       // if user is authenticated (successfully logged in)
       .then(() => {
-        this.cookieService.put('session', res.cookie);
         this.router.navigate(['/feed']);
       })
       // if wrong username/email/password

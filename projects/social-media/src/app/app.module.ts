@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { FeedModule } from './feed/feed.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UserLoggedInGuard } from './guards/user-logged-in.guard';
+import { CookieModule } from 'ngx-cookie';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { UserLoggedInGuard } from './guards/user-logged-in.guard';
     CoreModule,
     FeedModule,
     HttpClientModule,
+    CookieModule.withOptions(),
   ],
   providers: [UserLoggedInGuard],
   bootstrap: [AppComponent],

@@ -21,4 +21,10 @@ export class DataService {
       withCredentials: true,
     });
   }
+
+  getUser(username: string) {
+    return this.httpClient.get(`${this.domainLink}/user/${username}`, {
+      withCredentials: true,
+    });
+  }
 }

@@ -17,8 +17,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navbarBtns: {
     title: string;
     routerLink: string;
-    img_src: string;
-    img_alt: string;
+    img_src?: string;
+    img_alt?: string;
   }[] = [];
 
   unsubscribe$ = new Subject<void>();
@@ -32,14 +32,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
           {
             title: 'profile',
             routerLink: `user/${username}`,
-            img_src: '',
-            img_alt: '',
           },
           {
             title: 'logout',
             routerLink: 'logout',
             img_src: '../../../../assets/header/icons8-logout-96.png',
-            img_alt: '',
           },
         ])
     );

@@ -7,5 +7,7 @@ export interface Post {
   IS_ANON: boolean;
   IS_COMMENT: boolean;
   COMMENT_ON: number | null;
+  FROM_USERNAME: string | null;
+  TO_USERNAME: string;
   COMMENTS: Post[];
 }

@@ -10,7 +10,7 @@ import { Post } from '../../models/post';
   styleUrls: ['./feed.component.scss'],
 })
 export class FeedComponent implements OnInit, OnDestroy {
-  feed: Post[] = [];
+  feed: { username: string; data: Post[] } = { username: '', data: [] };
   unsubscribe$ = new Subject<void>();
 
   constructor(

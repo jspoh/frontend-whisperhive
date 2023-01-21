@@ -1,3 +1,5 @@
-<p>profile works!</p>
+<ng-container *ngFor="let post of userData.data.posts">
+  <app-post-card [postData]="post"></app-post-card>
+</ng-container>
 
 <pre>{{ userData | json }}</pre>

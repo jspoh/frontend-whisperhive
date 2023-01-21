@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { map, takeUntil, Subject } from 'rxjs';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +10,10 @@ import { map, takeUntil, Subject } from 'rxjs';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  userData: any;
+  userData: User = {
+    username: '',
+    data: { followingList: [], followerList: [], posts: [] },
+  };
 
   unsubscribe$ = new Subject<void>();
 

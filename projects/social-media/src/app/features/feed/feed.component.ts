@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { map, Subject, takeUntil } from 'rxjs';
 import { UserService } from '../../services/user.service';
+import { Post } from '../../models/post';
 
 @Component({
   selector: 'app-feed',
@@ -9,7 +10,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./feed.component.scss'],
 })
 export class FeedComponent implements OnInit, OnDestroy {
-  feed: any;
+  feed: Post[] = [];
   unsubscribe$ = new Subject<void>();
 
   constructor(

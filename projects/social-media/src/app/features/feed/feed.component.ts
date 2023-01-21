@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { map, Subject, takeUntil } from 'rxjs';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-feed',
@@ -11,7 +12,10 @@ export class FeedComponent implements OnInit, OnDestroy {
   feed: any;
   unsubscribe$ = new Subject<void>();
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     const feedObservable$ = this.dataService.getFeed();
@@ -20,7 +24,7 @@ export class FeedComponent implements OnInit, OnDestroy {
         map((val: any) => (this.feed = val)),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe();
+      .subscribe((val) => this.userService.username$.next(val.username));
   }
 
   ngOnDestroy(): void {

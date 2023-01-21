@@ -21,8 +21,6 @@ export class FeedComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$)
       )
       .subscribe();
-
-    this.feed = JSON.stringify(this.feed);
   }
 
   ngOnDestroy(): void {

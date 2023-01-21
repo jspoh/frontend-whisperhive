@@ -30,8 +30,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
         error(err) {},
         complete() {},
       });
-
-    this.userData = JSON.stringify(this.userData);
   }
 
   ngOnDestroy(): void {

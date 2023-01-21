@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { map, takeUntil, Subject } from 'rxjs';
@@ -8,10 +8,10 @@ import { map, takeUntil, Subject } from 'rxjs';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   userData: any;
 
-  unsubscribe$ = new Subject();
+  unsubscribe$ = new Subject<void>();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,5 +30,12 @@ export class ProfileComponent implements OnInit {
         error(err) {},
         complete() {},
       });
+
+    this.userData = JSON.stringify(this.userData);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

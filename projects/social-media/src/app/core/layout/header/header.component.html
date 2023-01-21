@@ -1,93 +1,116 @@
-<nav
-  class="flex justify-between md:justify-between h-[10vh] mx-auto md:w-full w-5/6"
->
-  <div
-    class="flex justify-center items-center gap-2 md:w-1/3 w-max"
-    routerLink="feed"
+<nav class="select-none">
+  <section
+    class="flex justify-between md:justify-between h-[10vh] mx-auto md:w-full w-5/6"
   >
-    <img src="../../../../favicon.ico" class="w-8" />
-    <span class="font-bold md:text-2xl text-lg">WhisperHive</span>
-  </div>
-
-  <ng-container *ngIf="!onLoginPage">
-    <div
-      *ngIf="!onLoginPage"
-      class="justify-center items-center gap-8 hidden md:flex w-1/3"
-    >
-      <input
-        class="border border-black px-4 py-1 rounded-2xl text-lg w-full"
-        type="text"
-        placeholder="Search"
-        [(ngModel)]="searchContent"
-        (input)="onSearch()"
-      />
-    </div>
-
-    <div
-      *ngIf="!onLoginPage"
-      class="w-1/3 md:flex items-center justify-center hidden"
-    >
-      <ul class="flex justify-between items-center gap-8">
-        <li *ngFor="let btn of navbarBtns">
-          <button [routerLink]="btn.routerLink">
-            {{ btn.title | titlecase }}
-          </button>
-        </li>
-      </ul>
-    </div>
-
-    <!-- mobile hamburger menu icon -->
-    <div
-      class="md:hidden flex items-center w-max justify-end"
-      (click)="openNavMenu()"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        id="menu-button"
-        class="h-8 w-8 cursor-pointer"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+    <div class="flex justify-center items-center md:w-1/3 w-max">
+      <div
+        class="flex justify-center items-center gap-2 md:w-1/3 w-max cursor-pointer"
+        routerLink="feed"
+        (click)="closeNavMenu()"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"
+        <img src="../../../../favicon.ico" class="w-8" />
+        <span class="font-bold md:text-2xl text-lg">WhisperHive</span>
+      </div>
+    </div>
+
+    <ng-container *ngIf="!onLoginPage">
+      <div
+        *ngIf="!onLoginPage"
+        class="justify-center items-center gap-8 hidden md:flex w-1/3"
+      >
+        <input
+          class="border border-black px-4 py-1 rounded-2xl text-lg w-full"
+          type="text"
+          placeholder="Search"
+          [(ngModel)]="searchContent"
+          (input)="onSearch()"
         />
-      </svg>
-    </div>
-  </ng-container>
-</nav>
+      </div>
 
-<!-- mobile navbar menu content -->
-<div
-  class="md:hidden flex h-0 w-full justify-center transition-all duration-150 bg-slate-100 focus:bg-slate-200"
-  [ngClass]="showNavMenu ? 'h-max' : 'h-0'"
->
-  <ul class="flex flex-col justify-center items-center w-full">
-    <li class="w-full relative">
-      <input
-        type="text"
-        class="border-t border-b border-slate-300 px-4 py-1 text-lg w-full bg-inherit text-center text-slate-500"
-        placeholder="Search"
-        [(ngModel)]="searchContent"
-      />
-      <button
-        class="absolute top-0 right-0 rounded-xl bg-blue-300 p-2 text-slate-600"
-        (click)="onSearch()"
+      <div
+        *ngIf="!onLoginPage"
+        class="w-1/3 md:flex items-center justify-center hidden"
       >
-        Search
-      </button>
-    </li>
-    <li class="w-full" *ngFor="let btn of navbarBtns; let i = index">
-      <button
-        class="w-full p-2 border-b border-slate-300"
+        <ul class="flex justify-between items-center gap-12">
+          <li
+            class="flex gap-1 items-center cursor-pointer"
+            *ngFor="let btn of navbarBtns"
+            [routerLink]="btn.routerLink"
+          >
+            <img
+              class="w-4 h-4"
+              *ngIf="btn.img_src"
+              [src]="btn.img_src"
+              [alt]="btn.img_alt"
+            />
+            <button>
+              {{ btn.title | titlecase }}
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- mobile hamburger menu icon -->
+      <div
+        class="md:hidden flex items-center w-max justify-end"
+        (click)="toggleNavMenu()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          id="menu-button"
+          class="h-8 w-8 cursor-pointer"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </div>
+    </ng-container>
+  </section>
+
+  <!-- mobile navbar menu content -->
+  <section
+    class="md:hidden flex h-0 w-full justify-center transition-all duration-150 bg-slate-100 focus:bg-slate-200"
+    [ngClass]="showNavMenu ? 'h-max' : 'h-0'"
+  >
+    <ul class="flex flex-col justify-center items-center w-full">
+      <li class="w-full relative">
+        <input
+          type="text"
+          class="border-t border-b border-slate-300 px-4 py-1 text-lg w-full bg-inherit text-center text-slate-500"
+          placeholder="Search"
+          [(ngModel)]="searchContent"
+        />
+        <button
+          class="absolute top-0 right-0 rounded-xl bg-blue-300 p-2 text-slate-600"
+          (click)="onSearch()"
+        >
+          Search
+        </button>
+      </li>
+      <li
+        class="w-full flex border-b border-slate-300 items-center justify-center"
         [ngClass]="{ 'border-t': i === 0 }"
+        *ngFor="let btn of navbarBtns; let i = index"
         [routerLink]="btn.routerLink"
+        (click)="closeNavMenu()"
       >
-        {{ btn.title | titlecase }}
-      </button>
-    </li>
-  </ul>
-</div>
+        <img
+          class="w-4 h-4"
+          *ngIf="btn.img_src"
+          [src]="btn.img_src"
+          [alt]="btn.img_alt"
+        />
+        <button class="p-2">
+          {{ btn.title | titlecase }}
+        </button>
+      </li>
+    </ul>
+  </section>
+</nav>

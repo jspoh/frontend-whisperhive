@@ -29,6 +29,7 @@ export class PostCardComponent implements OnInit {
   }
 
   onOpenProfile(event: any) {
+    const currentTimeInMs = Date.now();
     const username =
       event.target.innerText.split('@').join('') || event.target.alt;
     if (username === 'anonymous') return;

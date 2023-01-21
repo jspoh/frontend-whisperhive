@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
-import { map, takeUntil, Subject } from 'rxjs';
+import { map, takeUntil, Subject, take, filter } from 'rxjs';
 import { User } from '../../models/user';
 
 @Component({
@@ -19,25 +19,40 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.dataService
-      .getUser(this.activatedRoute.snapshot.url[0].path)
+    this.getUserData();
+
+    this.router.events
       .pipe(
-        map((response: any) => (this.userData = response)),
+        filter((event) => event instanceof NavigationEnd),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe({
-        next(res) {},
-        error(err) {},
-        complete() {},
+      .subscribe((event: any) => {
+        this.getUserData();
       });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  getUserData() {
+    this.dataService
+      .getUser(this.activatedRoute.snapshot.url[0].path)
+      .pipe(
+        map((response: any) => (this.userData = response)),
+        // takeUntil(this.unsubscribe$)
+        take(1)
+      )
+      .subscribe({
+        next(res) {},
+        error(err) {},
+        complete() {},
+      });
   }
 }

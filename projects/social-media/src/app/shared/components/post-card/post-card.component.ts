@@ -28,11 +28,20 @@ export class PostCardComponent implements OnInit {
     this.postData.POSTED_ON = new Date(this.postData.POSTED_ON.toString());
   }
 
-  onOpenProfile(event: any) {
-    const currentTimeInMs = Date.now();
-    const username =
-      event.target.innerText.split('@').join('') || event.target.alt;
-    if (username === 'anonymous') return;
+  onOpenProfile(username: string | null) {
+    if (username === null) return;
     this.router.navigate([`user/${username}`]);
+  }
+
+  onLike(postId: number) {
+    console.log('like', postId);
+  }
+
+  onComment(postId: number) {
+    console.log('comment on', postId);
+  }
+
+  onShare(postId: number) {
+    console.log('share', postId);
   }
 }

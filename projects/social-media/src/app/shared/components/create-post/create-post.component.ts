@@ -81,5 +81,6 @@ export class CreatePostComponent implements OnInit {
     };
 
     console.log(payload);
+    this.htmlText = '';
   }
 }

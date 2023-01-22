@@ -12,6 +12,8 @@ export class ProfileCardComponent implements OnInit {
     data: { followingList: [], followerList: [], posts: [] },
   };
 
+  isFollowing = false;
+
   /**
    * This input only takes in 'lg', 'md', 'sm'
    */
@@ -20,4 +22,10 @@ export class ProfileCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  onFollowAction(follow: boolean) {}
+
+  onMessage() {}
+
+  onOptions() {}
 }

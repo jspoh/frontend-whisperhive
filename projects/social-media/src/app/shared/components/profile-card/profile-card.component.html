@@ -6,7 +6,7 @@
 </ng-container>
 
 <ng-template #lgCard>
-  <div class="bg-slate-200 rounded-2xl shadow-2xl">
+  <div class="bg-slate-200 rounded-2xl shadow-2xl relative">
     <div class="flex flex-col items-center relative h-[24rem]">
       <img
         src="https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg"
@@ -33,6 +33,57 @@
       <p class="h-8 cursor-pointer">
         {{ userData.data.followingList.length }} Following
       </p>
+    </div>
+
+    <!-- user actions icons (right side) -->
+    <div class="absolute right-20 top-72 flex gap-4">
+      <!-- follow/unfollow button -->
+      <div
+        *ngIf="!isFollowing; else unfollowBtn"
+        class="border rounded-full border-black w-10 h-10 flex justify-center items-center cursor-pointer hover:bg-slate-300 transition-colors"
+        (click)="onFollowAction(true)"
+      >
+        <i class="fa-solid fa-user-plus"></i>
+      </div>
+      <ng-template #unfollowBtn>
+        <div
+          #unfollowBtn
+          class="border rounded-full border-black w-10 h-10 flex justify-center items-center cursor-pointer hover:bg-slate-300 transition-colors"
+          (click)="onFollowAction(false)"
+        >
+          <i class="fa-solid fa-user-minus"></i>
+        </div>
+      </ng-template>
+
+      <!-- message button -->
+      <div
+        class="border rounded-full border-black w-10 h-10 flex justify-center items-center cursor-pointer hover:bg-slate-300 transition-colors"
+        (click)="onMessage()"
+      >
+        <i class="fa-solid fa-comment"></i>
+      </div>
+
+      <!-- options button -->
+      <div
+        class="border rounded-full border-black w-10 h-10 flex justify-center items-center cursor-pointer hover:bg-slate-300 transition-colors"
+        (click)="onOptions()"
+      >
+        <i class="fa-solid fa-ellipsis"></i>
+      </div>
+    </div>
+
+    <div class="absolute top-[18.875rem] left-20">
+      <i class="fa-solid fa-cake-candles"></i>
+      04 October 2000
+    </div>
+
+    <div class="py-8 px-16 -mt-12">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos neque
+      voluptate debitis animi et dolor, earum amet quo excepturi aspernatur
+      beatae laboriosam ad commodi eligendi minus voluptatibus itaque sequi
+      quidem iusto reiciendis? Rem fugiat molestias debitis assumenda dicta
+      perspiciatis placeat possimus voluptate at doloremque ipsa illum, magni
+      ullam minima soluta.
     </div>
   </div>
 </ng-template>

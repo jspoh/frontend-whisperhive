@@ -8,12 +8,16 @@
       [(ngModel)]="htmlText"
       [styles]="quillStyle"
       [modules]="quillConfig"
+      [formats]="quillFormats"
+      (paste)="onPaste($event)"
       placeholder="Tell me something anonymously.. or not"
     >
     </quill-editor>
   </div>
 
-  <div class="absolute top-1 right-2 flex justify-between items-center gap-4">
+  <div
+    class="absolute top-1 right-2 flex justify-between items-center gap-4 overflow-hidden"
+  >
     <div class="flex gap-2">
       <label class="relative flex cursor-pointer items-center">
         <input type="checkbox" class="hidden" [(ngModel)]="stayAnon" checked />

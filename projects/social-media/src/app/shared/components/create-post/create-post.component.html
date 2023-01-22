@@ -9,11 +9,14 @@
       [styles]="quillStyle"
       [modules]="quillConfig"
       [formats]="quillFormats"
+      [sanitize]="true"
       (paste)="onPaste($event)"
       placeholder="Tell me something anonymously.. or not"
     >
     </quill-editor>
   </div>
+
+  <p [innerHTML]="htmlText"></p>
 
   <div
     class="absolute top-1 right-2 flex justify-between items-center gap-4 overflow-hidden"

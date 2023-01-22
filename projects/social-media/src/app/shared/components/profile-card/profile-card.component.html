@@ -1,1 +1,42 @@
-<p>profile-card works!</p>
+<ng-container
+  [ngTemplateOutlet]="
+    cardSize === 'lg' ? lgCard : cardSize === 'md' ? mdCard : smCard
+  "
+>
+</ng-container>
+
+<ng-template #lgCard>
+  <div class="bg-slate-200 rounded-2xl shadow-2xl">
+    <div class="flex flex-col items-center relative h-[24rem]">
+      <img
+        src="https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg"
+        alt="cover photo"
+        class="w-full h-60 object-cover"
+      />
+      <img
+        src="https://image.kpopmap.com/2019/02/IU-LILAC.jpg"
+        alt=""
+        class="rounded-full w-52 h-52 absolute top-28 shadow-2xl"
+      />
+    </div>
+
+    <div class="text-lg mx-auto w-max -mt-12">
+      <p class="text-center font-bold">@{{ userData.username }}</p>
+      <p class="text-center font-semibold">Lee Ji-eun</p>
+    </div>
+
+    <div class="flex justify-between my-8 w-1/2 mx-auto text-lg">
+      <p class="h-8">{{ userData.data.posts.length }} Whispers</p>
+      <p class="h-8 cursor-pointer">
+        {{ userData.data.followerList.length }} Followers
+      </p>
+      <p class="h-8 cursor-pointer">
+        {{ userData.data.followingList.length }} Following
+      </p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #mdCard>mdCard</ng-template>
+
+<ng-template #smCard>smCard</ng-template>

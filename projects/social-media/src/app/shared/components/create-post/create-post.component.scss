@@ -1,0 +1,7 @@
+input:checked + div > .toggle-btn {
+  left: calc(100% - 20px);
+}
+
+input:checked + div.toggle-bg {
+  @apply bg-blue-300;
+}

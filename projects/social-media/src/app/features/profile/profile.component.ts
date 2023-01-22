@@ -17,6 +17,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
 
+  userIsLoggedIn = true;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private dataService: DataService,

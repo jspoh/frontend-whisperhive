@@ -5,6 +5,11 @@
     class="max-w-5/6 w-[48rem] block shadow-2xl mb-8"
   ></app-profile-card>
 
+  <app-create-post
+    class="shadow-2xl w-[48rem] mb-8"
+    [userIsLoggedIn]="userIsLoggedIn"
+  ></app-create-post>
+
   <ng-container *ngFor="let post of userData.data.posts; let i = index">
     <app-post-card
       [postData]="post"

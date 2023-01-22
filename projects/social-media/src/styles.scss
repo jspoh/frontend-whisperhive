@@ -3,6 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+* use one or the other for ngx-quill module (quill-editor selector)
+*/
+// @import "~quill/dist/quill.bubble.css";
+// or
+@import "~quill/dist/quill.snow.css";
+
 * {
   font-family: sans-serif;
   scroll-behavior: smooth;

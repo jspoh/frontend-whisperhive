@@ -59,7 +59,7 @@ export class CreatePostComponent implements OnInit {
   ngOnInit(): void {}
 
   onContextMenu(e: any) {
-    e.preventDefault();
+    // e.preventDefault();
   }
 
   // @HostListener('paste', ['$event'])

@@ -8,8 +8,6 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  @Input() onLoginPage = false;
-
   showNavMenu = false;
 
   searchContent = '';
@@ -23,7 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
 
-  constructor(private userService: UserService) {}
+  constructor(public userService: UserService) {}
 
   ngOnInit(): void {
     this.userService.username$.pipe(takeUntil(this.unsubscribe$)).subscribe(

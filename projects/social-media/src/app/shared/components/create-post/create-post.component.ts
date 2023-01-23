@@ -1,6 +1,8 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { PostForm } from '../../../models/post-form';
+import { DataService } from '../../../services/data.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-create-post',
@@ -56,7 +58,10 @@ export class CreatePostComponent implements OnInit {
     },
   };
 
-  constructor(public userService: UserService) {}
+  constructor(
+    public userService: UserService,
+    private dataService: DataService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -84,7 +89,13 @@ export class CreatePostComponent implements OnInit {
       to: this.displayUser,
     };
 
-    console.log(payload);
+    this.dataService
+      .createPost(payload)
+      .pipe(take(1))
+      .subscribe({
+        next: (res) => console.log(res),
+        error: (err) => console.error(err),
+      });
     this.htmlText = '';
   }
 

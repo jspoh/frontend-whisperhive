@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
-import { map, takeUntil, Subject, take, filter } from 'rxjs';
+import { map, takeUntil, Subject, take, filter, tap } from 'rxjs';
 import { User } from '../../models/user';
 
 @Component({
@@ -12,12 +12,13 @@ import { User } from '../../models/user';
 export class ProfileComponent implements OnInit, OnDestroy {
   userData: User = {
     username: '',
-    data: { followingList: [], followerList: [], posts: [] },
+    name: '',
+    data: { currentUser: '', followingList: [], followerList: [], posts: [] },
   };
 
   unsubscribe$ = new Subject<void>();
 
-  userIsLoggedIn = true;
+  userIsLoggedIn = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,6 +50,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: any) => (this.userData = response)),
         // takeUntil(this.unsubscribe$)
+        tap((res) =>
+          typeof res.data.currentUser === 'string'
+            ? (this.userIsLoggedIn = true)
+            : (this.userIsLoggedIn = false)
+        ),
         take(1)
       )
       .subscribe({

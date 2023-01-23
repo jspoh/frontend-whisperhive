@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../../../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-card',
@@ -9,8 +10,11 @@ import { User } from '../../../models/user';
 export class ProfileCardComponent implements OnInit {
   @Input() userData: User = {
     username: '',
-    data: { followingList: [], followerList: [], posts: [] },
+    name: '',
+    data: { currentUser: '', followingList: [], followerList: [], posts: [] },
   };
+
+  @Input() userIsLoggedIn = false;
 
   isFollowing = false;
 
@@ -19,13 +23,32 @@ export class ProfileCardComponent implements OnInit {
    */
   @Input() cardSize = 'lg';
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
-  onFollowAction(follow: boolean) {}
+  onFollowAction(follow: boolean) {
+    if (!this.userIsLoggedIn) {
+      this.onUserNotLoggedInAction();
+      return;
+    }
+  }
 
-  onMessage() {}
+  onMessage() {
+    if (!this.userIsLoggedIn) {
+      this.onUserNotLoggedInAction();
+      return;
+    }
+  }
 
-  onOptions() {}
+  onOptions() {
+    if (!this.userIsLoggedIn) {
+      this.onUserNotLoggedInAction();
+      return;
+    }
+  }
+
+  onUserNotLoggedInAction() {
+    this.router.navigate(['login']);
+  }
 }

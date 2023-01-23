@@ -9,5 +9,7 @@ export interface Post {
   COMMENT_ON: number | null;
   FROM_USERNAME: string | null;
   TO_USERNAME: string;
+  FROM_NAME: string | null;
+  TO_NAME: string;
   COMMENTS: Post[];
 }

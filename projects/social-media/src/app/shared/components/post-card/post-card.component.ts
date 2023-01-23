@@ -19,6 +19,8 @@ export class PostCardComponent implements OnInit {
     COMMENT_ON: null,
     FROM_USERNAME: null,
     TO_USERNAME: '',
+    FROM_NAME: '',
+    TO_NAME: '',
     COMMENTS: [],
   };
 

@@ -3,6 +3,7 @@
   <section class="select-none flex justify-between">
     <div
       class="flex items-center cursor-pointer w-1/3"
+      [ngClass]="{ '!cursor-default': postData.IS_ANON }"
       (click)="onOpenProfile(postData.IS_ANON ? null : postData.FROM_USERNAME)"
     >
       <img
@@ -14,8 +15,17 @@
         "
         [alt]="postData.TO_USERNAME"
       />
-      <div class="text-md">
-        <p class="text-gray-900 leading-none overflow-hidden font-bold">
+      <div class="text-md flex flex-col items-start justify-center">
+        <p
+          class="text-gray-900 leading-none overflow-hidden text-lg"
+          *ngIf="!postData.IS_ANON"
+        >
+          {{ postData.FROM_NAME }}
+        </p>
+        <p
+          class="text-gray-600 leading-none overflow-hidden text-sm"
+          [ngClass]="{ '!text-base !text-gray-900': postData.IS_ANON }"
+        >
           {{ postData.IS_ANON ? "anonymous" : "@" + postData.FROM_USERNAME }}
         </p>
       </div>
@@ -32,8 +42,11 @@
       class="flex items-center justify-end cursor-pointer w-1/3"
       (click)="onOpenProfile(postData.TO_USERNAME)"
     >
-      <div class="text-md">
-        <p class="text-gray-900 leading-none overflow-hidden font-bold">
+      <div class="text-md flex flex-col items-end justify-center">
+        <p class="text-gray-900 leading-none overflow-hidden text-lg">
+          {{ postData.TO_NAME }}
+        </p>
+        <p class="text-gray-600 leading-none overflow-hidden text-sm">
           @{{ postData.TO_USERNAME }}
         </p>
       </div>

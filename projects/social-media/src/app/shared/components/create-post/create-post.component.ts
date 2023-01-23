@@ -1,5 +1,6 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
+import { PostForm } from '../../../models/post-form';
 
 @Component({
   selector: 'app-create-post',
@@ -7,6 +8,8 @@ import { UserService } from '../../../services/user.service';
   styleUrls: ['./create-post.component.scss'],
 })
 export class CreatePostComponent implements OnInit {
+  @Input() displayUser = '';
+
   // rich text editor config
   htmlText = '';
   stayAnon = true;
@@ -74,9 +77,11 @@ export class CreatePostComponent implements OnInit {
   }
 
   onPost() {
-    const payload = {
-      stayAnon: this.stayAnon,
-      postContent: this.htmlText,
+    const payload: PostForm = {
+      anon: this.stayAnon,
+      content: this.htmlText,
+      from: this.userService.username$.getValue(),
+      to: this.displayUser,
     };
 
     console.log(payload);

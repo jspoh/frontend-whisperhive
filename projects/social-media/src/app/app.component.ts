@@ -16,10 +16,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService
-      .checkIfUserIsLoggedIn()
+      .getCurrentUserData()
       .pipe(take(1))
-      .subscribe((status) => {
-        this.userService.userIsLoggedIn$.next(status);
+      .subscribe((user: { loggedIn: boolean; username: string }) => {
+        this.userService.userIsLoggedIn$.next(user.loggedIn);
+        this.userService.username$.next(user.username);
       });
   }
 }

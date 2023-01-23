@@ -28,26 +28,22 @@ export class ProfileCardComponent implements OnInit {
 
   onFollowAction(follow: boolean) {
     if (!this.userService.userIsLoggedIn$.getValue()) {
-      this.onUserNotLoggedInAction();
+      this.userService.onUserNotLoggedInAction();
       return;
     }
   }
 
   onMessage() {
     if (!this.userService.userIsLoggedIn$.getValue()) {
-      this.onUserNotLoggedInAction();
+      this.userService.onUserNotLoggedInAction();
       return;
     }
   }
 
   onOptions() {
     if (!this.userService.userIsLoggedIn$.getValue()) {
-      this.onUserNotLoggedInAction();
+      this.userService.onUserNotLoggedInAction();
       return;
     }
-  }
-
-  onUserNotLoggedInAction() {
-    this.router.navigate(['login']);
   }
 }

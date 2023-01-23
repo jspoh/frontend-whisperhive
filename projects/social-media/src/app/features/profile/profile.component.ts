@@ -18,8 +18,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
 
-  userIsLoggedIn = false;
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private dataService: DataService,
@@ -50,11 +48,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: any) => (this.userData = response)),
         // takeUntil(this.unsubscribe$)
-        tap((res) =>
-          typeof res.data.currentUser === 'string'
-            ? (this.userIsLoggedIn = true)
-            : (this.userIsLoggedIn = false)
-        ),
         take(1)
       )
       .subscribe({

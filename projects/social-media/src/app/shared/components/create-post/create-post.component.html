@@ -20,8 +20,20 @@
     class="absolute top-1 right-2 flex justify-between items-center gap-4 overflow-hidden"
   >
     <div class="flex gap-2">
-      <label class="relative flex cursor-pointer items-center">
-        <input type="checkbox" class="hidden" [(ngModel)]="stayAnon" checked />
+      <label
+        class="relative flex cursor-pointer items-center"
+        [ngClass]="{
+          '!cursor-not-allowed': !(userService.userIsLoggedIn$ | async)
+        }"
+        (click)="onAnonToggle()"
+      >
+        <input
+          [disabled]="!(userService.userIsLoggedIn$ | async)"
+          type="checkbox"
+          class="hidden"
+          [(ngModel)]="stayAnon"
+          checked
+        />
         <div
           class="relative h-5 w-10 flex-shrink-0 rounded-full bg-gray-300 toggle-bg"
         >

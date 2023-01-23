@@ -1,4 +1,5 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-create-post',
@@ -6,8 +7,6 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
   styleUrls: ['./create-post.component.scss'],
 })
 export class CreatePostComponent implements OnInit {
-  @Input() userIsLoggedIn = false;
-
   // rich text editor config
   htmlText = '';
   stayAnon = true;
@@ -54,7 +53,7 @@ export class CreatePostComponent implements OnInit {
     },
   };
 
-  constructor() {}
+  constructor(public userService: UserService) {}
 
   ngOnInit(): void {}
 
@@ -82,5 +81,11 @@ export class CreatePostComponent implements OnInit {
 
     console.log(payload);
     this.htmlText = '';
+  }
+
+  onAnonToggle() {
+    if (this.userService.userIsLoggedIn$.getValue()) return;
+
+    alert('Please log in to disable anonymity');
   }
 }

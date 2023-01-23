@@ -2,18 +2,23 @@
   <app-profile-card
     [userData]="userData"
     [cardSize]="'lg'"
+    (whispersClicked)="scrollToPosts()"
     class="max-w-5/6 w-[48rem] block shadow-2xl mb-8"
   ></app-profile-card>
 
-  <app-create-post class="shadow-2xl w-[48rem] mb-8"></app-create-post>
+  <div class="shadow-2xl w-[48rem] mb-8">
+    <app-create-post></app-create-post>
+  </div>
 
-  <ng-container *ngFor="let post of userData.data.posts; let i = index">
-    <app-post-card
-      [postData]="post"
-      class="max-w-5/6 w-[48rem] block shadow-2xl mb-8"
-      [ngClass]="{ 'mb-16': i === userData.data.posts.length - 1 }"
-    ></app-post-card>
-  </ng-container>
+  <!-- scroll-mt-20 not working but -scroll-mt-20 works. something to do with the component on top? -->
+  <div
+    class="mb-8 shadow-2xl max-w-5/6 w-[48rem] block scroll-mt-20"
+    [ngClass]="{ 'mb-16': i === userData.data.posts.length - 1 }"
+    *ngFor="let post of userData.data.posts; let i = index"
+    #posts
+  >
+    <app-post-card [postData]="post"></app-post-card>
+  </div>
 
   <ng-container *ngIf="userData.data.posts.length === 0">
     <div class="text-2xl mt-12">No whispers yet!</div>

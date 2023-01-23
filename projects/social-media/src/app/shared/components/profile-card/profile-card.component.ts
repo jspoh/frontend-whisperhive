@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from '../../../models/user';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
@@ -14,6 +14,8 @@ export class ProfileCardComponent implements OnInit {
     name: '',
     data: { currentUser: '', followingList: [], followerList: [], posts: [] },
   };
+
+  @Output() whispersClicked = new EventEmitter();
 
   isFollowing = false;
 
@@ -45,5 +47,9 @@ export class ProfileCardComponent implements OnInit {
       this.userService.onUserNotLoggedInAction();
       return;
     }
+  }
+
+  onWhispersClicked() {
+    this.whispersClicked.emit();
   }
 }

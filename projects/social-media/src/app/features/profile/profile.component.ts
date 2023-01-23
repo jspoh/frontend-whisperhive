@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { map, takeUntil, Subject, take, filter, tap } from 'rxjs';
@@ -10,6 +17,8 @@ import { User } from '../../models/user';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
+  @ViewChildren('posts') posts?: QueryList<ElementRef>;
+
   userData: User = {
     username: '',
     name: '',
@@ -55,5 +64,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
         error(err) {},
         complete() {},
       });
+  }
+
+  scrollToPosts() {
+    console.log(this.posts);
+    this.posts?.get(0)?.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 }

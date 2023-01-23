@@ -26,7 +26,10 @@
     </div>
 
     <div class="flex justify-between my-8 w-1/2 mx-auto text-lg">
-      <p class="h-8">{{ userData.data.posts.length }} Whispers</p>
+      <p class="h-8 cursor-pointer" (click)="onWhispersClicked()">
+        {{ userData.data.posts.length }}
+        {{ userData.data.posts.length === 1 ? "Whisper" : "Whispers" }}
+      </p>
       <p class="h-8 cursor-pointer">
         {{ userData.data.followerList.length }} Followers
       </p>

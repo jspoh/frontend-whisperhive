@@ -17,7 +17,7 @@ import { User } from '../../models/user';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  @ViewChildren('posts') posts?: QueryList<ElementRef>;
+  @ViewChildren('posts') private posts?: QueryList<ElementRef>;
 
   userData: User = {
     username: '',
@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     data: { currentUser: '', followingList: [], followerList: [], posts: [] },
   };
 
-  unsubscribe$ = new Subject<void>();
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  getUserData() {
+  private getUserData() {
     this.dataService
       .getUser(this.activatedRoute.snapshot.url[0].path)
       .pipe(

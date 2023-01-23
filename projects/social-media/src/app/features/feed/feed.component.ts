@@ -11,7 +11,7 @@ import { Post } from '../../models/post';
 })
 export class FeedComponent implements OnInit, OnDestroy {
   feed: { username: string; data: Post[] } = { username: '', data: [] };
-  unsubscribe$ = new Subject<void>();
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private dataService: DataService,

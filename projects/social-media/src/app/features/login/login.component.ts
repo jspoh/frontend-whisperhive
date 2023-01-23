@@ -11,7 +11,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  unsubscribe$ = new Subject<void>();
+  private unsubscribe$ = new Subject<void>();
 
   loginForm: any = FormGroup;
 

@@ -84,8 +84,12 @@ export class CreatePostComponent implements OnInit {
   onPost() {
     const payload: PostForm = {
       anon: this.stayAnon,
+      comment: false,
+      comment_on: null,
       content: this.htmlText,
-      from: this.userService.username$.getValue(),
+      from: this.userService.username$.getValue()
+        ? this.userService.username$.getValue()
+        : null,
       to: this.displayUser,
     };
 

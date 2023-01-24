@@ -59,9 +59,7 @@
   </section>
 
   <!-- body -->
-  <p class="text-gray-700 mt-2 text-lg">
-    {{ postData.MESSAGE }}
-  </p>
+  <p class="text-gray-700 mt-2 text-lg" [innerHTML]="postData.MESSAGE"></p>
 
   <!-- reaction buttons -->
   <div class="flex justify-between items-center mt-6 w-1/4 mx-auto">

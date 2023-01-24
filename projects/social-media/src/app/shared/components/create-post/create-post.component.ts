@@ -12,11 +12,7 @@ import { User } from '../../../models/user';
 })
 export class CreatePostComponent implements OnInit {
   @Input() displayUser: string = '';
-  @Input() userData$: BehaviorSubject<User> = new BehaviorSubject<User>({
-    username: '',
-    name: '',
-    data: { currentUser: '', followingList: [], followerList: [], posts: [] },
-  });
+  @Input() updateData$: Subject<void> = new Subject<void>();
 
   // rich text editor config
   htmlText = '';
@@ -106,16 +102,7 @@ export class CreatePostComponent implements OnInit {
         next: (res: any) =>
           // have to .next() an item of type User or frontend errors will be logged in console
           // no real effect on usage though
-          this.userData$.next({
-            username: '',
-            name: '',
-            data: {
-              currentUser: '',
-              followingList: [],
-              followerList: [],
-              posts: [],
-            },
-          }),
+          this.updateData$.next(),
         // error: (err) => console.error(err),
       });
     this.htmlText = '';

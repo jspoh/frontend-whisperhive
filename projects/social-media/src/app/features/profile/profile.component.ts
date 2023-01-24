@@ -33,6 +33,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     data: { currentUser: '', followingList: [], followerList: [], posts: [] },
   });
 
+  updateData$ = new Subject<void>();
+
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -44,7 +46,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUserData();
 
-    this.userData$.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+    this.updateData$.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.getUserData();
     });
 

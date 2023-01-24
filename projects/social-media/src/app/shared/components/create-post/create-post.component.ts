@@ -10,7 +10,7 @@ import { take } from 'rxjs';
   styleUrls: ['./create-post.component.scss'],
 })
 export class CreatePostComponent implements OnInit {
-  @Input() displayUser = '';
+  @Input() displayUser: string = '';
 
   // rich text editor config
   htmlText = '';

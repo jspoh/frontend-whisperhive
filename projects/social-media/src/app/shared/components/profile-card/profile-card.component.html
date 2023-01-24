@@ -21,20 +21,20 @@
     </div>
 
     <div class="text-lg mx-auto w-max -mt-12">
-      <p class="text-center font-bold">@{{ userData.username }}</p>
-      <p class="text-center font-semibold">{{ userData.name }}</p>
+      <p class="text-center font-bold">@{{ userData!.username }}</p>
+      <p class="text-center font-semibold">{{ userData!.name }}</p>
     </div>
 
     <div class="flex justify-between my-8 w-1/2 mx-auto text-lg">
       <p class="h-8 cursor-pointer" (click)="onWhispersClicked()">
-        {{ userData.data.posts.length }}
-        {{ userData.data.posts.length === 1 ? "Whisper" : "Whispers" }}
+        {{ userData!.data.posts.length }}
+        {{ userData!.data.posts.length === 1 ? "Whisper" : "Whispers" }}
       </p>
       <p class="h-8 cursor-pointer">
-        {{ userData.data.followerList.length }} Followers
+        {{ userData!.data.followerList.length }} Followers
       </p>
       <p class="h-8 cursor-pointer">
-        {{ userData.data.followingList.length }} Following
+        {{ userData!.data.followingList.length }} Following
       </p>
     </div>
 

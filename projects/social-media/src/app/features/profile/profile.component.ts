@@ -19,11 +19,8 @@ import { User } from '../../models/user';
 export class ProfileComponent implements OnInit, OnDestroy {
   @ViewChildren('posts') private posts?: QueryList<ElementRef>;
 
-  userData: User = {
-    username: '',
-    name: '',
-    data: { currentUser: '', followingList: [], followerList: [], posts: [] },
-  };
+  userData$ = new Subject<User>();
+  dataLoaded = false;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -35,6 +32,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUserData();
+
+    this.userData$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => (this.dataLoaded = true));
 
     this.router.events
       .pipe(
@@ -55,7 +56,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.dataService
       .getUser(this.activatedRoute.snapshot.url[0].path)
       .pipe(
-        map((response: any) => (this.userData = response)),
+        map((response: any) => this.userData$.next(response)),
         // takeUntil(this.unsubscribe$)
         take(1)
       )

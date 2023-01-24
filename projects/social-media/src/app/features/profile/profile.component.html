@@ -1,28 +1,32 @@
-<div class="flex flex-col items-center">
-  <app-profile-card
-    [userData]="userData"
-    [cardSize]="'lg'"
-    (whispersClicked)="scrollToPosts()"
-    class="max-w-5/6 w-[48rem] block shadow-2xl mb-8"
-  ></app-profile-card>
+<ng-container *ngIf="userData$ | async as userData">
+  <div class="flex flex-col items-center">
+    <app-profile-card
+      [userData]="userData"
+      [cardSize]="'lg'"
+      (whispersClicked)="scrollToPosts()"
+      class="max-w-5/6 w-[48rem] block shadow-2xl mb-8"
+    ></app-profile-card>
 
-  <div class="shadow-2xl w-[48rem] mb-8">
-    <app-create-post [displayUser]="userData.username"></app-create-post>
+    <div class="shadow-2xl w-[48rem] mb-8">
+      <app-create-post [displayUser]="userData!.username"></app-create-post>
+    </div>
+
+    <!-- scroll-mt-20 not working but -scroll-mt-20 works. something to do with the component on top? -->
+    <div
+      class="mb-8 shadow-2xl max-w-5/6 w-[48rem] block scroll-mt-20"
+      [ngClass]="{
+        'mb-16': i === userData!.data.posts.length - 1
+      }"
+      *ngFor="let post of userData!.data.posts; let i = index"
+      #posts
+    >
+      <app-post-card [postData]="post"></app-post-card>
+    </div>
+
+    <ng-container *ngIf="userData!.data.posts.length === 0">
+      <div class="text-2xl mt-12">No whispers yet!</div>
+    </ng-container>
   </div>
 
-  <!-- scroll-mt-20 not working but -scroll-mt-20 works. something to do with the component on top? -->
-  <div
-    class="mb-8 shadow-2xl max-w-5/6 w-[48rem] block scroll-mt-20"
-    [ngClass]="{ 'mb-16': i === userData.data.posts.length - 1 }"
-    *ngFor="let post of userData.data.posts; let i = index"
-    #posts
-  >
-    <app-post-card [postData]="post"></app-post-card>
-  </div>
-
-  <ng-container *ngIf="userData.data.posts.length === 0">
-    <div class="text-2xl mt-12">No whispers yet!</div>
-  </ng-container>
-</div>
-
-<pre>{{ userData | json }}</pre>
+  <pre>{{ userData | json }}</pre>
+</ng-container>

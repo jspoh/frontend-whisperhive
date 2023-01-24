@@ -13,13 +13,16 @@ export class FeedComponent implements OnInit, OnDestroy {
   feed: { username: string; data: Post[] } = { username: '', data: [] };
   private unsubscribe$ = new Subject<void>();
 
+  postsToRetrieve = 10;
+  postsToRetrieveOnInit = 10;
+
   constructor(
     private dataService: DataService,
     private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    const feedObservable$ = this.dataService.getFeed();
+    const feedObservable$ = this.dataService.getFeed(this.postsToRetrieve);
     feedObservable$
       .pipe(
         map((val: any) => (this.feed = val)),

@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
   QueryList,
@@ -40,6 +41,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
+  postsToRetrieveOnInit = 5;
+  postsToRetrieve = 5;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private dataService: DataService,
@@ -47,10 +51,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getUserData();
+    this.getUserData(this.postsToRetrieveOnInit);
 
     this.updateData$.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
-      this.getUserData();
+      this.getUserData(this.postsToRetrieve);
     });
 
     /**
@@ -62,7 +66,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$)
       )
       .subscribe(() => {
-        this.getUserData();
+        this.getUserData(this.postsToRetrieveOnInit);
       });
   }
 
@@ -71,9 +75,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  private getUserData() {
+  private getUserData(postsToRetrieve: number) {
     this.dataService
-      .getUser(this.activatedRoute.snapshot.url[0].path)
+      .getUser(this.activatedRoute.snapshot.url[0].path, postsToRetrieve)
       .pipe(
         map((response: any) => this.userData$.next(response)),
         take(1)
@@ -91,5 +95,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
       behavior: 'smooth',
       block: 'start',
     });
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  private onScroll(e: any) {
+    console.log(
+      window.scrollY,
+      document.documentElement.scrollHeight - window.innerHeight
+    );
+
+    if (
+      Math.ceil(window.scrollY) !==
+      document.documentElement.scrollHeight - window.innerHeight
+    ) {
+      return;
+    }
+
+    // if user is at bottom of the page
+    console.log(this.postsToRetrieve);
+    this.postsToRetrieve += this.postsToRetrieveOnInit;
+    this.updateData$.next();
   }
 }

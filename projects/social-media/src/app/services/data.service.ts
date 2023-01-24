@@ -8,6 +8,9 @@ import { PostForm } from '../models/post-form';
   providedIn: 'root',
 })
 export class DataService {
+  /**
+   * Server domain link
+   */
   private readonly domainLink = 'http://localhost:3000';
 
   constructor(private httpClient: HttpClient) {}
@@ -26,7 +29,7 @@ export class DataService {
 
   /**
    * Sends a post request with login form payload for user authentication
-   * @param data follows the LoginForm model and takes in the payload to be sent for authentication
+   * @param {LoginForm} data follows the LoginForm model and takes in the payload to be sent for authentication
    * @returns an observable that can be subscribed to make the request
    */
   loginUser(data: LoginForm): Observable<any> {
@@ -42,28 +45,36 @@ export class DataService {
    *
    * Also returns current user's name (or empty string if not logged in) along with the following and follower list along with
    * all posts posted to displayUser.
-   * @param username takes in the username of the profile you want to get data for
+   * @param {string} username takes in the username of the profile you want to get data for
+   * @param {number} postsToRetrieve takes in the number of entries you want to retrieve ordered by date posted in descending order
    * @returns an observable to sends the user data for the profile page
    */
-  getUser(username: string): Observable<any> {
-    return this.httpClient.get(`${this.domainLink}/user/${username}`, {
-      withCredentials: true,
-    });
+  getUser(username: string, postsToRetrieve: number): Observable<any> {
+    return this.httpClient.get(
+      `${this.domainLink}/user/${username}?posts=${postsToRetrieve}`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 
   /**
    * Get feed data. Returns current user's username and posts(and its comments) of users they are following
+   * @param {number} postsToRetrieve takes in the number of entries you want to retrieve ordered by date posted in descending order
    * @returns an observable that sends the feed data depending on the user that is logged in
    */
-  getFeed(): Observable<any> {
-    return this.httpClient.get(`${this.domainLink}/feed`, {
-      withCredentials: true,
-    });
+  getFeed(postsToRetrieve: number): Observable<any> {
+    return this.httpClient.get(
+      `${this.domainLink}/feed?posts=${postsToRetrieve}`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 
   /**
    * Creates a post in the database
-   * @param
+   * @param {PostForm} post takes in the post form payload to send to backend
    */
   createPost(post: PostForm) {
     return this.httpClient.post(`${this.domainLink}/post`, post, {

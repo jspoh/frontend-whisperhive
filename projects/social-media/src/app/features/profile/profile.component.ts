@@ -8,7 +8,15 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
-import { map, takeUntil, Subject, take, filter, tap } from 'rxjs';
+import {
+  map,
+  takeUntil,
+  Subject,
+  take,
+  filter,
+  tap,
+  BehaviorSubject,
+} from 'rxjs';
 import { User } from '../../models/user';
 
 @Component({
@@ -19,8 +27,11 @@ import { User } from '../../models/user';
 export class ProfileComponent implements OnInit, OnDestroy {
   @ViewChildren('posts') private posts?: QueryList<ElementRef>;
 
-  userData$ = new Subject<User>();
-  dataLoaded = false;
+  userData$ = new BehaviorSubject<User>({
+    username: '',
+    name: '',
+    data: { currentUser: '', followingList: [], followerList: [], posts: [] },
+  });
 
   private unsubscribe$ = new Subject<void>();
 
@@ -33,9 +44,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUserData();
 
-    this.userData$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => (this.dataLoaded = true));
+    this.userData$.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+      this.getUserData();
+    });
 
     this.router.events
       .pipe(

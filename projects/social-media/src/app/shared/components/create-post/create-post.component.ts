@@ -2,7 +2,8 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { PostForm } from '../../../models/post-form';
 import { DataService } from '../../../services/data.service';
-import { take } from 'rxjs';
+import { Subject, take, BehaviorSubject } from 'rxjs';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-create-post',
@@ -11,6 +12,11 @@ import { take } from 'rxjs';
 })
 export class CreatePostComponent implements OnInit {
   @Input() displayUser: string = '';
+  @Input() userData$: BehaviorSubject<User> = new BehaviorSubject<User>({
+    username: '',
+    name: '',
+    data: { currentUser: '', followingList: [], followerList: [], posts: [] },
+  });
 
   // rich text editor config
   htmlText = '';
@@ -97,8 +103,20 @@ export class CreatePostComponent implements OnInit {
       .createPost(payload)
       .pipe(take(1))
       .subscribe({
-        next: (res) => console.log(res),
-        error: (err) => console.error(err),
+        next: (res: any) =>
+          // have to .next() an item of type User or frontend errors will be logged in console
+          // no real effect on usage though
+          this.userData$.next({
+            username: '',
+            name: '',
+            data: {
+              currentUser: '',
+              followingList: [],
+              followerList: [],
+              posts: [],
+            },
+          }),
+        // error: (err) => console.error(err),
       });
     this.htmlText = '';
   }

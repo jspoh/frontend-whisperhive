@@ -1,6 +1,13 @@
-# Frontend for social-media
+# TODO
+
+- CanActivate guard if not logged in (feed component)
+
+--
+
+# Frontend for WhisperHive
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
+Upgraded to v15.1.2
 
 ## Development server
 

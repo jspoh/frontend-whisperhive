@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { map, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, map, Subject, take, takeUntil, tap } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { Post } from '../../models/post';
+import { Feed } from '../../models/feed';
 
 @Component({
   selector: 'app-feed',
@@ -10,11 +11,13 @@ import { Post } from '../../models/post';
   styleUrls: ['./feed.component.scss'],
 })
 export class FeedComponent implements OnInit, OnDestroy {
-  feed: { username: string; data: Post[] } = { username: '', data: [] };
+  // feed: Feed = { username: '', data: [] };
+  feedData$ = new Subject<Feed>();
+  updateData$ = new Subject<void>();
   private unsubscribe$ = new Subject<void>();
 
-  postsToRetrieve = 10;
-  postsToRetrieveOnInit = 10;
+  postsToRetrieve = 5;
+  postsToRetrieveOnInit = 5;
 
   constructor(
     private dataService: DataService,
@@ -22,17 +25,44 @@ export class FeedComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const feedObservable$ = this.dataService.getFeed(this.postsToRetrieve);
-    feedObservable$
-      .pipe(
-        map((val: any) => (this.feed = val)),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe((val) => this.userService.username$.next(val.username));
+    this.updateFeedData();
+    this.updateData$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => this.updateFeedData());
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  updateFeedData() {
+    this.dataService
+      .getFeed(this.postsToRetrieve)
+      .pipe(
+        map((val: any) => this.feedData$.next(val)),
+        tap((val: any) => this.userService.username$.next(val.username)),
+        take(1)
+      )
+      .subscribe();
+  }
+
+  /**
+   * Loads more posts onto page as user scrolls,
+   * @param e Unused
+   * @returns void
+   */
+  @HostListener('window:scroll', ['$event'])
+  private onScroll(e: any): void {
+    if (
+      Math.ceil(window.scrollY) !==
+      document.documentElement.scrollHeight - window.innerHeight
+    ) {
+      return;
+    }
+
+    // if user is at bottom of the page
+    this.postsToRetrieve += this.postsToRetrieveOnInit;
+    this.updateData$.next();
   }
 }

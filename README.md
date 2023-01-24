@@ -1,6 +1,7 @@
 # TODO
 
 - CanActivate guard if not logged in (feed component)
+- Move more variables and functions into service files
 
 --
 

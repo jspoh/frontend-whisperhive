@@ -1,11 +1,11 @@
-<div class="flex flex-col items-center">
-  <ng-container *ngFor="let post of feed.data; let i = index">
-    <app-post-card
-      [postData]="post"
-      class="max-w-5/6 w-[48rem] block shadow-2xl mb-8"
-      [ngClass]="{ 'mb-16': i === feed.data.length - 1 }"
-    ></app-post-card>
-  </ng-container>
-</div>
-
-<pre>{{ feed | json }}</pre>
+<ng-container *ngIf="feedData$ | async as feedData">
+  <div class="flex flex-col items-center">
+    <ng-container *ngFor="let post of feedData.data; let i = index">
+      <app-post-card
+        [postData]="post"
+        class="max-w-5/6 w-[48rem] block shadow-2xl mb-8"
+        [ngClass]="{ 'mb-16': i === feedData.data.length - 1 }"
+      ></app-post-card>
+    </ng-container>
+  </div>
+</ng-container>

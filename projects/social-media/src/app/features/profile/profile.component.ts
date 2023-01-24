@@ -33,6 +33,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     data: { currentUser: '', followingList: [], followerList: [], posts: [] },
   });
 
+  /**
+   * Call next() on this subject after data is updated. For example, after a new post is created.
+   */
   updateData$ = new Subject<void>();
 
   private unsubscribe$ = new Subject<void>();
@@ -50,12 +53,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.getUserData();
     });
 
+    /**
+     * Required to get new user's data on page change. For example, when user clicks on another user profile while on another user's page
+     */
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe((event: any) => {
+      .subscribe(() => {
         this.getUserData();
       });
   }
@@ -70,7 +76,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .getUser(this.activatedRoute.snapshot.url[0].path)
       .pipe(
         map((response: any) => this.userData$.next(response)),
-        // takeUntil(this.unsubscribe$)
         take(1)
       )
       .subscribe({

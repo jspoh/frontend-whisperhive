@@ -97,13 +97,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Loads more posts onto page as user scrolls,
+   * @param e Unused
+   * @returns void
+   */
   @HostListener('window:scroll', ['$event'])
-  private onScroll(e: any) {
-    console.log(
-      window.scrollY,
-      document.documentElement.scrollHeight - window.innerHeight
-    );
-
+  private onScroll(e: any): void {
     if (
       Math.ceil(window.scrollY) !==
       document.documentElement.scrollHeight - window.innerHeight
@@ -112,7 +112,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     // if user is at bottom of the page
-    console.log(this.postsToRetrieve);
     this.postsToRetrieve += this.postsToRetrieveOnInit;
     this.updateData$.next();
   }

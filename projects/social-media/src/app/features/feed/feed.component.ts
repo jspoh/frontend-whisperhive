@@ -41,7 +41,6 @@ export class FeedComponent implements OnInit, OnDestroy {
       .getFeed(this.postsToRetrieve)
       .pipe(
         map((val: any) => this.feedData$.next(val)),
-        tap((val: any) => this.userService.username$.next(val.username)),
         take(1)
       )
       .subscribe();

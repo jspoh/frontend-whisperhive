@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, take, debounceTime } from 'rxjs';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-header',
@@ -24,9 +25,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(public userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.username$.pipe(takeUntil(this.unsubscribe$)).subscribe(
-      (username) =>
-        (this.navbarBtns = [
+    this.userService.username$
+      .pipe(takeUntil(this.unsubscribe$), debounceTime(100))
+      .subscribe((username) => {
+        this.navbarBtns = [
           {
             title: 'profile',
             routerLink: `user/${username}`,
@@ -36,8 +38,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
             routerLink: 'logout',
             img_src: '../../../../assets/header/icons8-logout-96.png',
           },
-        ])
-    );
+        ];
+      });
   }
 
   ngOnDestroy(): void {

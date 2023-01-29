@@ -41,8 +41,8 @@ export class ProfileCardComponent implements OnInit {
     }
 
     const payload = {
-      current_user: this.userData.data.currentUser,
-      viewing_user: this.userData.username,
+      currentUser: this.userData.data.currentUser,
+      viewingUser: this.userData.username,
       follow: follow,
     };
 

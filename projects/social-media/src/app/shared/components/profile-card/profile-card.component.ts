@@ -1,29 +1,37 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { User } from '../../../models/user';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { DataService } from '../../../services/data.service';
-import { take } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-profile-card',
   templateUrl: './profile-card.component.html',
   styleUrls: ['./profile-card.component.scss'],
 })
-export class ProfileCardComponent implements OnInit {
+export class ProfileCardComponent implements OnInit, OnDestroy {
   @Input() userData: User = {
     username: '',
     name: '',
     following: null,
     data: { currentUser: '', followingList: [], followerList: [], posts: [] },
   };
-
-  @Output() whispersClicked = new EventEmitter();
-
   /**
    * This input only takes in 'lg', 'md', 'sm'
    */
   @Input() cardSize = 'lg';
+
+  @Output() whispersClicked = new EventEmitter();
+
+  unsubscribe$ = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -32,6 +40,11 @@ export class ProfileCardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   onFollowAction(follow: boolean) {
     if (!this.userService.userIsLoggedIn$.getValue()) {
@@ -49,12 +62,10 @@ export class ProfileCardComponent implements OnInit {
       .followAction(payload)
       .pipe(take(1))
       .subscribe({
-        next(value) {
-          console.log(value);
+        next: (value) => {
+          this.userData.following = !this.userData.following;
         },
-        error(err) {
-          console.error(err);
-        },
+        error: (err) => {},
       });
   }
 

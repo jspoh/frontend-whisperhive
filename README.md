@@ -2,6 +2,7 @@
 
 - CanActivate guard if not logged in (feed component)
 - Move more variables and functions into service files
+- optimize loading more data as user scrolls. dont make anymore requests once user runs out of posts(esp on profile)
 
 --
 

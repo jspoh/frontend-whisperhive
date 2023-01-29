@@ -42,7 +42,7 @@
     <div class="absolute right-20 top-72 flex gap-4">
       <!-- follow/unfollow button -->
       <div
-        *ngIf="!isFollowing; else unfollowBtn"
+        *ngIf="!userData.following; else unfollowBtn"
         class="border rounded-full border-black w-10 h-10 flex justify-center items-center cursor-pointer hover:bg-slate-300 transition-colors"
         (click)="onFollowAction(true)"
       >

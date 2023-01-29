@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userData$ = new BehaviorSubject<User>({
     username: '',
     name: '',
+    following: null,
     data: { currentUser: '', followingList: [], followerList: [], posts: [] },
   });
 

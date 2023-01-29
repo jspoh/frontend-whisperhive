@@ -14,12 +14,11 @@ export class ProfileCardComponent implements OnInit {
   @Input() userData: User = {
     username: '',
     name: '',
+    following: null,
     data: { currentUser: '', followingList: [], followerList: [], posts: [] },
   };
 
   @Output() whispersClicked = new EventEmitter();
-
-  isFollowing = false;
 
   /**
    * This input only takes in 'lg', 'md', 'sm'

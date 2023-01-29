@@ -81,4 +81,12 @@ export class DataService {
       withCredentials: true,
     });
   }
+
+  followAction(payload: any) {
+    return this.httpClient.post(
+      `${this.domainLink}/user/follow-action`,
+      payload,
+      { withCredentials: true }
+    );
+  }
 }
